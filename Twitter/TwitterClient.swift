@@ -45,7 +45,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
             completion(tweets: tweets, error: nil)
             for tweet in tweets {
-                print("text: \(tweet.text), created: \(tweet.createdAt)")
+                print("user: \(tweet.user!.name) username: \(tweet.user?.screenname) text: \(tweet.text), created: \(tweet.createdAt)")
             }
         }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
                 print("error getting home timeline")
@@ -70,7 +70,7 @@ class TwitterClient: BDBOAuth1SessionManager {
                 self.loginCompletion?(user: nil, error: error)
             })
             
-            }) { (error: NSError!) -> Void in
+        }) { (error: NSError!) -> Void in
                 print("Failed to receive access token \(error)")
                 self.loginCompletion?(user: nil, error: error)
         }
