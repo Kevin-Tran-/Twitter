@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     var tweets: [Tweet]?
     
@@ -16,6 +16,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
+    var count = 40
     
     var refreshControl: UIRefreshControl!       //add refresh on drag
 
@@ -52,29 +53,54 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func networkRequest(){
-        TwitterClient.sharedInstance.homeTimelineWithCompletion(nil) { (tweets, error) -> () in
+        TwitterClient.sharedInstance.homeTimelineWithCompletion(20, params: nil) { (tweets, error) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
         }
     }
     
-//    func loadMoreData() {
-//        
-//        print(tweets.count)
-//        Business.searchWithTerm("Thai", offset2: offsetCount, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-//            self.businesses! += businesses
-//            // Update flag
-//            self.isMoreDataLoading = false
-//            
-//            // Stop the loading indicator
-//            self.loadingMoreView!.stopAnimating()
-//            
-//            // Reload the tableView now that there is new data
-//            self.tableView.reloadData()
-//            self.offsetCount += 20
-//            print(businesses)
-//        })
-//    }
+    // This method causes program to not load properly due to rate limit
+    func loadMoreData() {
+        print(count)
+        if count < 200 {
+            TwitterClient.sharedInstance.homeTimelineWithCompletion(count, params: nil) { (tweets, error) -> () in
+                self.tweets = tweets
+                
+                // Update flag
+                self.isMoreDataLoading = false
+                
+                // Stop the loading indicator
+                self.loadingMoreView!.stopAnimating()
+                
+                print("current count \(self.count)")
+                // Reload the tableView now that there is new data
+                self.tableView.reloadData()
+                self.count += 20
+
+            }
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Code to load more results
+                loadMoreData()
+            }
+        }
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tweets != nil {

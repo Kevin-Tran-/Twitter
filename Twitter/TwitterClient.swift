@@ -39,8 +39,8 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
-    func homeTimelineWithCompletion(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
-        GET("1.1/statuses/home_timeline.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+    func homeTimelineWithCompletion(count: Int, params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
+        GET("1.1/statuses/home_timeline.json?count=\(count)", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             //print("home timeline: \(response)")
             var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
             completion(tweets: tweets, error: nil)
@@ -125,12 +125,12 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func unFavorite (id_str: String) -> (){
         print(id_str)
-        POST("1.1/favorites/create.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            print("Successfully favorited")
+        POST("1.1/favorites/destroy.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Successfully unfavorited")
             //self.loginCompletion?(stwe: tweets, error: nil)
             
             }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                print("Failed to favorite \(error)")
+                print("Failed to unfavorite \(error)")
                 self.loginCompletion?(user: nil, error: error)
         }
     }
