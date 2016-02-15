@@ -46,8 +46,8 @@ class TwitterClient: BDBOAuth1SessionManager {
             completion(tweets: tweets, error: nil)
             for tweet in tweets {
                 //print("user: \(tweet.user!.name) username: \(tweet.user?.screenname) text: \(tweet.text), created: \(tweet.createdAt)")
-                let temp = tweet.secondsToTime()
-                print(temp)
+//                let temp = tweet.secondsToTime()
+//                print(temp)
             }
         }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
                 print("error getting home timeline")
@@ -74,6 +74,30 @@ class TwitterClient: BDBOAuth1SessionManager {
             
         }) { (error: NSError!) -> Void in
                 print("Failed to receive access token \(error)")
+                self.loginCompletion?(user: nil, error: error)
+        }
+    }
+    
+    func retweet (id_str: Int) -> (){
+        print(id_str)
+        POST("1.1/statuses/retweet/\(id_str).json", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+                print("Successfully retweet")
+                //self.loginCompletion?(stwe: tweets, error: nil)
+
+            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("Failed to retweet \(error)")
+                self.loginCompletion?(user: nil, error: error)
+        }
+    }
+    
+    func favorite (id_str: Int) -> (){
+        print(id_str)
+        POST("1.1/favorites/create.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Successfully favorited")
+            //self.loginCompletion?(stwe: tweets, error: nil)
+            
+            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("Failed to favorite \(error)")
                 self.loginCompletion?(user: nil, error: error)
         }
     }

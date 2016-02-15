@@ -17,6 +17,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var typeImage: UIImageView!
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     
     var tweet: Tweet!{
@@ -32,8 +34,24 @@ class TweetCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        retweetButton.setImage(UIImage(named: "retweet-action_default"), forState: .Normal)
+        favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
+
+
+
     }
 
+    @IBAction func onFavorite(sender: UIButton) {
+        if tweet != nil {
+            TwitterClient.sharedInstance.favorite(tweet.id_str!)
+        }
+    }
+    @IBAction func onRetweet(sender: UIButton) {
+        if tweet != nil {
+            TwitterClient.sharedInstance.retweet(tweet.id_str!)
+        }
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

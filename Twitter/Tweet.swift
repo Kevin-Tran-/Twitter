@@ -14,6 +14,9 @@ class Tweet: NSObject {
     var createdAtString: String?
     var createdAt: NSDate?
     var calcTime: String?
+    var id_str: Int?
+    var retweeted: Bool?
+    var favorited: Bool?
     
     let secs = 60
     let mins = 60
@@ -23,13 +26,16 @@ class Tweet: NSObject {
         user = User(dictionary: dictionary["user"] as! NSDictionary)
         text = dictionary["text"] as? String
         createdAtString = dictionary["created_at"] as? String
-        
+        id_str = dictionary["id"] as? Int
+        retweeted = dictionary["retweeted"] as? Bool
+        favorited = dictionary["favorited"] as? Bool
         
         var formatter = NSDateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
         createdAt = formatter.dateFromString(createdAtString!)
-        
-        //let temp = secondsToTime(createdAt!)
+        print(id_str)
+//        print(dictionary)
+//        let temp = secondsToTime(createdAt!)
 //        calcTime = temp
 //        print(calcTime)
         
@@ -56,7 +62,7 @@ class Tweet: NSObject {
             return s
         }
         
-//        sec = sec / secs
+        sec = sec / secs
         let s = "\(sec)m"
         return s
     }
