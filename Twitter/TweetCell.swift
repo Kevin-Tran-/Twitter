@@ -22,10 +22,10 @@ class TweetCell: UITableViewCell {
     var tweet: Tweet!{
         didSet {
             nameLabel.text = tweet.user?.name
-            screennameLabel.text = tweet.user?.screenname
+            screennameLabel.text = "@\(tweet.user!.screenname!)"
             descriptionLabel.text = tweet.text
             profileImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
-            
+            timestampLabel.text = tweet.secondsToTime() //need to format better
         }
     }
 
