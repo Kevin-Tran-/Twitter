@@ -78,7 +78,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
-    func retweet (id_str: Int) -> (){
+    func retweet (id_str: String) -> (){
         print(id_str)
         POST("1.1/statuses/retweet/\(id_str).json", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
                 print("Successfully retweet")
@@ -90,7 +90,40 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
-    func favorite (id_str: Int) -> (){
+//    func unRetweet (tweet: Tweet) -> (){
+//        var originalTweetId = ""
+//        if tweet.retweeted == false {
+//            print("tweet was not retweeted")
+//            return
+//        } else {
+//            if tweet.retweeted == nil {
+//                originalTweetId = tweet.id_str
+//            }
+//        }
+//        print(id_str)
+//        POST("1.1/statuses/unretweet/\(id_str).json", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+//            print("Successfully retweet")
+//            //self.loginCompletion?(stwe: tweets, error: nil)
+//            
+//            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+//                print("Failed to retweet \(error)")
+//                self.loginCompletion?(user: nil, error: error)
+//        }
+//    }
+    
+    func favorite (id_str: String) -> (){
+        print(id_str)
+        POST("1.1/favorites/create.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Successfully favorited")
+            //self.loginCompletion?(stwe: tweets, error: nil)
+            
+            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("Failed to favorite \(error)")
+                self.loginCompletion?(user: nil, error: error)
+        }
+    }
+    
+    func unFavorite (id_str: String) -> (){
         print(id_str)
         POST("1.1/favorites/create.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print("Successfully favorited")

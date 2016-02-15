@@ -28,27 +28,41 @@ class TweetCell: UITableViewCell {
             descriptionLabel.text = tweet.text
             profileImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
             timestampLabel.text = tweet.secondsToTime() //need to format better
+            self.setButtonState()
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        retweetButton.setImage(UIImage(named: "retweet-action_default"), forState: .Normal)
-        favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
-
-
-
+//         Initialization code
+    }
+    
+    func setButtonState() {
+        if tweet != nil {
+            if (tweet.retweeted == true) {
+                retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
+            } else {
+                retweetButton.setImage(UIImage(named: "retweet-action_default"), forState: .Normal)
+            }
+            if (tweet.favorited == true) {
+                favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
+            } else {
+                favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
+            }
+        }
     }
 
     @IBAction func onFavorite(sender: UIButton) {
         if tweet != nil {
             TwitterClient.sharedInstance.favorite(tweet.id_str!)
+            favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
+
         }
     }
     @IBAction func onRetweet(sender: UIButton) {
         if tweet != nil {
             TwitterClient.sharedInstance.retweet(tweet.id_str!)
+            retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
         }
     }
     

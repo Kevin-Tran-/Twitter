@@ -14,7 +14,7 @@ class Tweet: NSObject {
     var createdAtString: String?
     var createdAt: NSDate?
     var calcTime: String?
-    var id_str: Int?
+    var id_str: String?
     var retweeted: Bool?
     var favorited: Bool?
     
@@ -26,7 +26,7 @@ class Tweet: NSObject {
         user = User(dictionary: dictionary["user"] as! NSDictionary)
         text = dictionary["text"] as? String
         createdAtString = dictionary["created_at"] as? String
-        id_str = dictionary["id"] as? Int
+        id_str = dictionary["id_str"] as? String
         retweeted = dictionary["retweeted"] as? Bool
         favorited = dictionary["favorited"] as? Bool
         

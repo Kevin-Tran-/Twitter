@@ -106,10 +106,14 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xon-MB-2fW">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xon-MB-2fW">
                                                     <rect key="frame" x="66" y="85" width="30" height="30"/>
                                                     <animations/>
-                                                    <state key="normal" title="RT"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="JVY-go-Jo6"/>
+                                                        <constraint firstAttribute="width" constant="30" id="rXw-nu-OFE"/>
+                                                    </constraints>
+                                                    <state key="normal" image="retweet-action-inactive"/>
                                                     <connections>
                                                         <action selector="onRetweet:" destination="8R4-33-FaV" eventType="touchUpInside" id="qVO-9p-L1n"/>
                                                     </connections>
@@ -121,10 +125,14 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Etf-PH-5Sb">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Etf-PH-5Sb">
                                                     <rect key="frame" x="116" y="85" width="30" height="30"/>
                                                     <animations/>
-                                                    <state key="normal" title="Fav"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="Oa9-Ka-5HT"/>
+                                                        <constraint firstAttribute="height" constant="30" id="euK-iV-mjV"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Fav" image="like-action-off"/>
                                                     <connections>
                                                         <action selector="onFavorite:" destination="8R4-33-FaV" eventType="touchUpInside" id="1pN-B5-yzH"/>
                                                     </connections>
@@ -248,4 +256,8 @@
             <point key="canvasLocation" x="1121" y="378"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="like-action-off" width="54" height="72"/>
+        <image name="retweet-action-inactive" width="75" height="72"/>
+    </resources>
 </document>
