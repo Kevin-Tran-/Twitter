@@ -17,17 +17,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKT-21-RSU">
-                                <rect key="frame" x="124" y="175" width="122" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKT-21-RSU">
+                                <rect key="frame" x="98" y="269" width="125" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Login with Twitter"/>
+                                <state key="normal" title="Login With Twitter"/>
                                 <connections>
                                     <action selector="onLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fZ9-Lg-M4y"/>
                                 </connections>
                             </button>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Twitter_logo_blue_48" translatesAutoresizingMaskIntoConstraints="NO" id="vg5-Fo-7Tl">
+                                <rect key="frame" x="136" y="213" width="48" height="48"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="e6g-kO-dxS"/>
+                                    <constraint firstAttribute="width" constant="48" id="tFf-q2-8fT"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NKT-21-RSU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="10e-h8-TJt"/>
+                            <constraint firstItem="vg5-Fo-7Tl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1eJ-yy-N5S"/>
+                            <constraint firstItem="NKT-21-RSU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="G0Z-vH-wDC"/>
+                            <constraint firstItem="NKT-21-RSU" firstAttribute="top" secondItem="vg5-Fo-7Tl" secondAttribute="bottom" constant="8" id="XhW-Nn-HcR"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="b9W-K3-eiv"/>
                     <connections>
@@ -196,7 +210,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Twitter" id="RC3-FR-Lzf">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="sjo-Wd-IsY">
+                        <barButtonItem key="leftBarButtonItem" id="sjo-Wd-IsY">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wDF-tE-u4R">
                                 <rect key="frame" x="16" y="7" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -257,6 +271,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Twitter_logo_blue_48" width="48" height="48"/>
         <image name="like-action-off" width="54" height="72"/>
         <image name="retweet-action-inactive" width="75" height="72"/>
     </resources>

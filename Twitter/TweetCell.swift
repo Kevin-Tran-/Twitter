@@ -27,7 +27,7 @@ class TweetCell: UITableViewCell {
             screennameLabel.text = "@\(tweet.user!.screenname!)"
             descriptionLabel.text = tweet.text
             profileImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
-            timestampLabel.text = tweet.secondsToTime() //need to format better
+            timestampLabel.text = tweet.secondsToTime() 
             self.setButtonState()
         }
     }
@@ -56,7 +56,6 @@ class TweetCell: UITableViewCell {
         if tweet != nil {
             TwitterClient.sharedInstance.favorite(tweet.id_str!)
             favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
-
         }
     }
     @IBAction func onRetweet(sender: UIButton) {

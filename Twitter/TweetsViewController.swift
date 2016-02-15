@@ -29,6 +29,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         
+        // Navigation color
+        navigationController?.navigationBar.barTintColor = UIColorFromRGB(0x326ada)
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+
+        
         // Set up Infinite Scroll loading indicator
         let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
         loadingMoreView = InfiniteScrollActivityView(frame: frame)
@@ -102,6 +108,15 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tweets != nil {
             return tweets!.count
@@ -121,7 +136,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func onRefresh() {
         self.networkRequest()
-        print("Refreshing Movies")
+        print("Refreshing Tweets")
         self.refreshControl.endRefreshing()
         print("Refreshing Complete")
     }

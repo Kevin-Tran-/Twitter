@@ -1,8 +1,8 @@
-# Project 4 - *Name of App Here*
+# Project 4 - *Twitter*
 
-**Name of your app** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
+**Twitter** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **X** hours spent in total
+Time spent: **12** hours spent in total
 
 ## User Stories
 
@@ -26,24 +26,24 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Posting tweets
+2. Click to see comments and retweets
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/knEfjHw.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+API params structure were vague. Only got it towards the end but end up not changing method inputs. 
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [Kevin Tran]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
