@@ -54,8 +54,16 @@ class TweetCell: UITableViewCell {
 
     @IBAction func onFavorite(sender: UIButton) {
         if tweet != nil {
-            TwitterClient.sharedInstance.favorite(tweet.id_str!)
-            favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
+            if (tweet.favorited == true) {
+                TwitterClient.sharedInstance.unFavorite(tweet.id_str!)
+                favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
+                tweet.favorited = false
+            } else {
+                TwitterClient.sharedInstance.favorite(tweet.id_str!)
+                favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
+                tweet.favorited = true
+            }
+            
         }
     }
     @IBAction func onRetweet(sender: UIButton) {

@@ -17,6 +17,7 @@ class Tweet: NSObject {
     var id_str: String?
     var retweeted: Bool?
     var favorited: Bool?
+    var reply_id: String?
     
     let secs = 60
     let mins = 60
@@ -29,6 +30,8 @@ class Tweet: NSObject {
         id_str = dictionary["id_str"] as? String
         retweeted = dictionary["retweeted"] as? Bool
         favorited = dictionary["favorited"] as? Bool
+        reply_id = dictionary["reply_id"] as? String
+        
         
         var formatter = NSDateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
