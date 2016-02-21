@@ -31,13 +31,31 @@ class ProfileViewController: UIViewController {
         }
         
         userImage.setImageWithURL(NSURL(string: tweet.user!.profileImageUrl!)!)
+        userImage.layer.cornerRadius = 10;
         usernameLabel.text = tweet.user!.name!
-        screennameLabel.text = tweet.user!.screenname!
+        screennameLabel.text = "@\(tweet.user!.screenname!)"
         taglineLabel.text = tweet.user!.tagline!
-        tweetCountLabel.text = "\(tweet.user!.statusesCount!) TWEETS"
-        followingCountLabel.text = "\(tweet.user!.followingCount!) FOLLOWING"
-        followerCountLabel.text = "\(tweet.user!.followerCount!) FOLLOWER"
-    
+        
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .DecimalStyle
+
+        let att = [NSFontAttributeName: UIFont.boldSystemFontOfSize(13.0)]
+        var attributedString = NSMutableAttributedString(string: "\nTWEETS")
+        
+        let boldStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.user!.statusesCount!)!)", attributes:att)
+        boldStatus.appendAttributedString(attributedString)
+        tweetCountLabel.attributedText = boldStatus
+        
+        attributedString = NSMutableAttributedString(string: "\nFOLLOWING")
+        let followingStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.user!.followingCount!)!)", attributes:att)
+        followingStatus.appendAttributedString(attributedString)
+        followingCountLabel.attributedText = followingStatus
+        
+        attributedString = NSMutableAttributedString(string: "\nFOLLOWERS")
+        let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.user!.followerCount!)!)", attributes:att)
+        followerStatus.appendAttributedString(attributedString)
+        followerCountLabel.attributedText = followerStatus
+
         // Do any additional setup after loading the view.
     }
 

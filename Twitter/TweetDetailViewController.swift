@@ -22,21 +22,7 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var likeCountLabel: UILabel!
     
     var tweet: Tweet!
-//        {
-//        didSet {
-//            usernameLabel.text = tweet.user!.name
-//            screennameLabel.text = "@\(tweet.user!.screenname!)"
-//            tweetDetailLabel.text = tweet.text
-//            userImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
-//            timeLabel.text = tweet.secondsToTime()
-//            retweetCountLabel.text = "\(tweet.retweetCount) RETWEETS"
-//            likeCountLabel.text = "\(tweet.favoriteCount) LIKES"
-//            //self.setButtonState()
-//        }
-//    }
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,10 +30,27 @@ class TweetDetailViewController: UIViewController {
         screennameLabel.text = "@\(tweet.user!.screenname!)"
         tweetDetailLabel.text = tweet.text
         userImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
-        timeLabel.text = tweet.secondsToTime()
-        retweetCountLabel.text = "\(tweet.retweetCount!) RETWEETS"
-        likeCountLabel.text = "\(tweet.favoriteCount!) LIKES"
-        //self.setButtonState()
+        userImage.layer.cornerRadius = 10;
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "h:mm d MMM yy"
+        let time = dateFormatter.stringFromDate(tweet.createdAt!)
+        timeLabel.text = time
+        
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .DecimalStyle
+        
+        let att = [NSFontAttributeName: UIFont.boldSystemFontOfSize(13.0)]
+        var attributedString = NSMutableAttributedString(string: " RETWEETS")
+        
+        let boldRetweet = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.retweetCount!)!)", attributes:att)
+        boldRetweet.appendAttributedString(attributedString)
+        retweetCountLabel.attributedText = boldRetweet
+        
+        attributedString = NSMutableAttributedString(string: " LIKES")
+        let boldLikes = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.favoriteCount!)!)", attributes:att)
+        boldLikes.appendAttributedString(attributedString)
+        likeCountLabel.attributedText = boldLikes
 
         // Do any additional setup after loading the view.
     }
