@@ -18,6 +18,8 @@ class Tweet: NSObject {
     var retweeted: Bool?
     var favorited: Bool?
     var reply_id: String?
+    var favoriteCount: Int?
+    var retweetCount: Int?
     
     let secs = 60
     let mins = 60
@@ -31,6 +33,8 @@ class Tweet: NSObject {
         retweeted = dictionary["retweeted"] as? Bool
         favorited = dictionary["favorited"] as? Bool
         reply_id = dictionary["reply_id"] as? String
+        favoriteCount = dictionary["favorite_count"] as? Int
+        retweetCount = dictionary["retweet_count"] as? Int
         
         
         var formatter = NSDateFormatter()
