@@ -149,18 +149,40 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegueWithIdentifier("tweetDetailSegue", sender: self)
 
     }
+    @IBAction func onProfileClick(sender: UIButton) {
+        
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
         
-        let cell = sender as! UITableViewCell
-        let indexPath = tableView.indexPathForCell((cell))
-        let tweet = tweets![indexPath!.row]
-        
-        let detailViewController = segue.destinationViewController as! TweetDetailViewController
-        detailViewController.tweet = tweet
-        
-        print("prepare for seque called")
-        
+        if (segue.identifier == "tweetDetailSegue") {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPathForCell((cell))
+            let tweet = tweets![indexPath!.row]
+            
+            let nav = segue.destinationViewController as! UINavigationController
+            let detailViewController = nav.topViewController as! TweetDetailViewController
+            detailViewController.tweet = tweet
+            print("prepare for seque called on Tweet Details")
+        }
+        if (segue.identifier == "profileSegue") {
+            let cell = sender as! UIButton
+            let buttonCell = cell.superview?.superview as! UITableViewCell
+            let indexPath = tableView.indexPathForCell((buttonCell))
+            let tweet = tweets![indexPath!.row]
+            
+            let nav = segue.destinationViewController as! UINavigationController
+            let profileViewController = nav.topViewController as! ProfileViewController
+            
+            profileViewController.tweet = tweet
+            
+//            let params = ["screen_name": "\(tweet.user!.screenname!)"] as NSDictionary
+//            TwitterClient.sharedInstance.UserTimelineWithCompletion(params, completion: { (tweets, error) -> () in
+//                profileViewController.tweet = tweets
+//            })
+            
+        }
     }
 
 }

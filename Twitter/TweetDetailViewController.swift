@@ -21,22 +21,33 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var likeCountLabel: UILabel!
     
-    var tweet: Tweet!{
-        didSet {
-            usernameLabel.text = tweet.user?.name
-            screennameLabel.text = "@\(tweet.user!.screenname!)"
-            tweetDetailLabel.text = tweet.text
-            userImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
-            timeLabel.text = tweet.secondsToTime()
-            retweetCountLabel.text = "\(tweet.retweetCount) RETWEETS"
-            likeCountLabel.text = "\(tweet.favoriteCount) LIKES"
-            //self.setButtonState()
-        }
-    }
+    var tweet: Tweet!
+//        {
+//        didSet {
+//            usernameLabel.text = tweet.user!.name
+//            screennameLabel.text = "@\(tweet.user!.screenname!)"
+//            tweetDetailLabel.text = tweet.text
+//            userImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
+//            timeLabel.text = tweet.secondsToTime()
+//            retweetCountLabel.text = "\(tweet.retweetCount) RETWEETS"
+//            likeCountLabel.text = "\(tweet.favoriteCount) LIKES"
+//            //self.setButtonState()
+//        }
+//    }
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        usernameLabel.text = tweet.user!.name
+        screennameLabel.text = "@\(tweet.user!.screenname!)"
+        tweetDetailLabel.text = tweet.text
+        userImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
+        timeLabel.text = tweet.secondsToTime()
+        retweetCountLabel.text = "\(tweet.retweetCount!) RETWEETS"
+        likeCountLabel.text = "\(tweet.favoriteCount!) LIKES"
+        //self.setButtonState()
 
         // Do any additional setup after loading the view.
     }
@@ -46,6 +57,9 @@ class TweetDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onBack(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
