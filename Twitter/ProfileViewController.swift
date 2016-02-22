@@ -12,6 +12,8 @@ class ProfileViewController: UIViewController {
 
     var tweet: Tweet!
     var user: User!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     
     @IBOutlet weak var headlineImage: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
@@ -63,6 +65,7 @@ class ProfileViewController: UIViewController {
             followerCount = user!.followerCount!
         }
         setProfile()
+
     }
     
     func setProfile(){
@@ -98,6 +101,8 @@ class ProfileViewController: UIViewController {
         let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(followerCount!)!)", attributes:att)
         followerStatus.appendAttributedString(attributedString)
         followerCountLabel.attributedText = followerStatus
+        
+        //scrollView.contentSize = self.contentView.bounds.size//CGSize(width: scrollView.frame.size.width, height: contentView.frame.origin.y + contentView.frame.size.height)
     }
 
     override func didReceiveMemoryWarning() {

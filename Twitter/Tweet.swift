@@ -83,4 +83,11 @@ class Tweet: NSObject {
         
         return tweets
     }
+    
+    class func tweetsAddBeginning(tweet: NSDictionary, var tweets: [Tweet]!) -> [Tweet] {
+        
+        tweets.insert(Tweet(dictionary: tweet), atIndex: 0)
+        
+        return tweets
+    }
 }

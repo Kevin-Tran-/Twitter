@@ -168,6 +168,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegueWithIdentifier("selfProfileSegue", sender: self)
     }
     
+    @IBAction func onTweetClick(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("tweetSegue", sender: self)
+        
+    }
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
         
@@ -202,6 +208,13 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let nav = segue.destinationViewController as! UINavigationController
             let profileViewController = nav.topViewController as! ProfileViewController
             profileViewController.user = User.currentUser
+        }
+        
+        if (segue.identifier == "tweetSegue") {
+            let nav = segue.destinationViewController as! UINavigationController
+            let composeViewController = nav.topViewController as! ComposeViewController
+            composeViewController.user = User.currentUser
+            composeViewController.tweets = tweets
         }
 
     }

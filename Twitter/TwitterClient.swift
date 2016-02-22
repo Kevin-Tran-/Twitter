@@ -71,14 +71,14 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func verifyCredentialWithParam(params: NSDictionary?, completion: (info: NSDictionary?, error: NSError?) -> ()) {
-        GET("1.1/account/verify_credentials.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            print("user credential: \(response)")
-            var info = response as! NSDictionary!
-            completion(info: info, error: nil)
+    func tweetWithParam(params: NSDictionary?, completion: (tweet: NSDictionary!, error: NSError?) -> ()) {
+        POST("1.1/statuses/update.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("User just tweeted successfully \(response)")
+            var tweet = response as! NSDictionary!
+            completion(tweet: tweet, error: nil)
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                print("error getting user credential \(error)")
-                completion(info: nil, error: error)
+                print("Failed tweet with error: \(error)")
+                completion(tweet: nil, error: error)
         })
     }
     
