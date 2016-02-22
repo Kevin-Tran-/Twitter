@@ -24,10 +24,13 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     var username: String?
     var screenname: String?
     
+    weak var firstViewController: TweetsViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         textView.delegate = self
+    
         
         userImageURL = NSURL(string: user!.profileImageUrl!)!
         username = user!.name!
@@ -47,6 +50,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onCancel(sender: UIBarButtonItem) {
+        firstViewController!.tweets = self.tweets
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -59,8 +63,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
             TwitterClient.sharedInstance.tweetWithParam(params, completion: { (tweet, error) -> () in
                 //sent successfully
                 self.tweets.insert(Tweet(dictionary: tweet), atIndex: 0)
-                print(self.tweets)
-                print(self.tweets.count)
+//                print(self.tweets)
+//                print(self.tweets.count)
             })
             
             textView.text = ""
@@ -98,14 +102,17 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let nav = segue.destinationViewController as! UINavigationController
+        let tweetsViewController = nav.topViewController as! TweetsViewController
+        tweetsViewController.tweets = tweets
     }
-    */
+
 
 }

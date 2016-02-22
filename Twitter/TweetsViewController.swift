@@ -215,6 +215,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let composeViewController = nav.topViewController as! ComposeViewController
             composeViewController.user = User.currentUser
             composeViewController.tweets = tweets
+            composeViewController.firstViewController = self
         }
 
     }

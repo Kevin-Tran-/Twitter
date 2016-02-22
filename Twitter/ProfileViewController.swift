@@ -36,20 +36,20 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if tweet != nil {
-            if tweet.user?.profileBannerURL != nil{
-                headlineURL = NSURL(string: tweet.user!.profileBannerURL!)!
-            } else {
-                //set image as something
-            }
-            userImageURL = NSURL(string: tweet.user!.profileImageUrl!)!
-            username = tweet.user!.name!
-            screenname = tweet.user!.screenname!
-            tagline = tweet.user!.tagline!
-            tweetcount = tweet.user!.statusesCount!
-            followingCount = tweet.user!.followingCount!
-            followerCount = tweet.user!.followerCount!
-        }
+//        if tweet != nil {
+//            if tweet.user?.profileBannerURL != nil{
+//                headlineURL = NSURL(string: tweet.user!.profileBannerURL!)!
+//            } else {
+//                //set image as something
+//            }
+//            userImageURL = NSURL(string: tweet.user!.profileImageUrl!)!
+//            username = tweet.user!.name!
+//            screenname = tweet.user!.screenname!
+//            tagline = tweet.user!.tagline!
+//            tweetcount = tweet.user!.statusesCount!
+//            followingCount = tweet.user!.followingCount!
+//            followerCount = tweet.user!.followerCount!
+//        }
         if user != nil{
             if user.profileBannerURL != nil{
                 headlineURL = NSURL(string: user.profileBannerURL!)!

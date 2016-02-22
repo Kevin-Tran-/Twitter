@@ -73,7 +73,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func tweetWithParam(params: NSDictionary?, completion: (tweet: NSDictionary!, error: NSError?) -> ()) {
         POST("1.1/statuses/update.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            print("User just tweeted successfully \(response)")
+            print("User just tweeted successfully")
             var tweet = response as! NSDictionary!
             completion(tweet: tweet, error: nil)
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
