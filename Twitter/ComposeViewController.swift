@@ -56,7 +56,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onCancel(sender: UIBarButtonItem) {
-        firstViewController!.tweets = self.tweets
+        //firstViewController!.tweets = self.tweets
         dismissViewControllerAnimated(true, completion: nil)
     }
     

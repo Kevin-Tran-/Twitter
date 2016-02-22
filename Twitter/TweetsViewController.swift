@@ -190,6 +190,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let nav = segue.destinationViewController as! UINavigationController
             let detailViewController = nav.topViewController as! TweetDetailViewController
             detailViewController.tweet = tweet
+            detailViewController.tweets = tweets
+            detailViewController.firstViewController = self
             print("prepare for seque called on Tweet Details")
         }
         if (segue.identifier == "profileSegue") {

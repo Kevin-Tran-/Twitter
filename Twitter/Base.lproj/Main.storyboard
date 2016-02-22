@@ -324,14 +324,29 @@
                                                     <constraint firstAttribute="width" constant="100" id="sSz-TK-Yw0"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-pP-eGZ">
-                                                <rect key="frame" x="16" y="200" width="30" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Rt-Kb-IpG">
+                                                <rect key="frame" x="96" y="200" width="30" height="30"/>
                                                 <animations/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="Wke-Ug-3zh"/>
-                                                    <constraint firstAttribute="width" constant="30" id="jzU-5O-8gX"/>
+                                                    <constraint firstAttribute="height" constant="30" id="Jg5-UU-9Ji"/>
+                                                    <constraint firstAttribute="width" constant="30" id="wTj-Pz-vgt"/>
                                                 </constraints>
-                                                <state key="normal" image="reply-action_0"/>
+                                                <state key="normal" image="retweet-action_default"/>
+                                                <connections>
+                                                    <action selector="onRetweet:" destination="Yyf-qU-W9d" eventType="touchUpInside" id="1gF-mk-EQ8"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7z8-4Q-sni">
+                                                <rect key="frame" x="176" y="200" width="30" height="30"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="DK5-gg-ks9"/>
+                                                    <constraint firstAttribute="width" constant="30" id="Kt3-FY-1HO"/>
+                                                </constraints>
+                                                <state key="normal" image="like-action-off"/>
+                                                <connections>
+                                                    <action selector="onFavorite:" destination="Yyf-qU-W9d" eventType="touchUpInside" id="onz-vV-9kK"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Screen_name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxN-pr-7Vf">
                                                 <rect key="frame" x="124" y="42" width="164" height="18"/>
@@ -375,28 +390,17 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.70459330673758869" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Rt-Kb-IpG">
-                                                <rect key="frame" x="96" y="200" width="30" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-pP-eGZ">
+                                                <rect key="frame" x="16" y="200" width="30" height="30"/>
                                                 <animations/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="Jg5-UU-9Ji"/>
-                                                    <constraint firstAttribute="width" constant="30" id="wTj-Pz-vgt"/>
+                                                    <constraint firstAttribute="height" constant="30" id="Wke-Ug-3zh"/>
+                                                    <constraint firstAttribute="width" constant="30" id="jzU-5O-8gX"/>
                                                 </constraints>
-                                                <state key="normal" image="retweet-action_default"/>
+                                                <state key="normal" image="reply-action_0"/>
                                                 <connections>
-                                                    <action selector="onRetweet:" destination="Yyf-qU-W9d" eventType="touchUpInside" id="1gF-mk-EQ8"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7z8-4Q-sni">
-                                                <rect key="frame" x="176" y="200" width="30" height="30"/>
-                                                <animations/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="DK5-gg-ks9"/>
-                                                    <constraint firstAttribute="width" constant="30" id="Kt3-FY-1HO"/>
-                                                </constraints>
-                                                <state key="normal" image="like-action-off"/>
-                                                <connections>
-                                                    <action selector="onFavorite:" destination="Yyf-qU-W9d" eventType="touchUpInside" id="onz-vV-9kK"/>
+                                                    <action selector="onReply:" destination="Yyf-qU-W9d" eventType="touchUpInside" id="dsu-gg-tfl"/>
+                                                    <segue destination="6fy-SE-4Sa" kind="modal" identifier="detailsTweetSegue" id="zKN-ov-bZN"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -826,5 +830,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nJM-CG-icl"/>
+        <segue reference="zKN-ov-bZN"/>
     </inferredMetricsTieBreakers>
 </document>

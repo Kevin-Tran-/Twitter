@@ -21,7 +21,11 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var likeCountLabel: UILabel!
     
+    weak var firstViewController: TweetsViewController?
+
+    
     var tweet: Tweet!
+    var tweets: [Tweet]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,14 +117,26 @@ class TweetDetailViewController: UIViewController {
         }
     }
     
-    /*
+    @IBAction func onReply(sender: UIButton) {
+        self.performSegueWithIdentifier("detailsTweetSegue", sender: sender)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "detailsTweetSegue") {
+            
+            let nav = segue.destinationViewController as! UINavigationController
+            let composeViewController = nav.topViewController as! ComposeViewController
+            composeViewController.user = User.currentUser
+            composeViewController.tweetReference = tweet
+            composeViewController.tweets = tweets
+            composeViewController.firstViewController = self.firstViewController
+
+
+        }
     }
-    */
+    
 
 }
