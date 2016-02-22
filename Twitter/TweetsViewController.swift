@@ -190,7 +190,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let nav = segue.destinationViewController as! UINavigationController
             let profileViewController = nav.topViewController as! ProfileViewController
             
-            profileViewController.tweet = tweet
+            profileViewController.user = tweet.user
             
 //            let params = ["screen_name": "\(tweet.user!.screenname!)"] as NSDictionary
 //            TwitterClient.sharedInstance.UserTimelineWithCompletion(params, completion: { (tweets, error) -> () in
@@ -201,17 +201,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if (segue.identifier == "selfProfileSegue") {
             let nav = segue.destinationViewController as! UINavigationController
             let profileViewController = nav.topViewController as! ProfileViewController
-            
             profileViewController.user = User.currentUser
-            
-//            TwitterClient.sharedInstance.verifyCredentialWithParam(nil, completion: { (info, error) -> () in
-//                print(info)
-//                var user: User!
-//                
-//                profileViewController.tweet = tweet
-//                    
-//                profileViewController.tweet.user?.dictionary = info
-//            })
         }
 
     }
