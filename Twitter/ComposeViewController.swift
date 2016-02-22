@@ -24,6 +24,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     var username: String?
     var screenname: String?
     
+    var replyID: String?
+    var tweetReference: Tweet!
+    
     weak var firstViewController: TweetsViewController?
     
     override func viewDidLoad() {
@@ -31,7 +34,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         
         textView.delegate = self
     
-        
         userImageURL = NSURL(string: user!.profileImageUrl!)!
         username = user!.name!
         screenname = user!.screenname!
@@ -40,6 +42,10 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         userImage.layer.cornerRadius = 10;
         usernameLabel.text = username!
         screennameLabel.text = "@\(screenname!)"
+        
+        if tweetReference != nil {
+            textView.text = "@\(tweetReference.user!.screenname!) "
+        }
 
         // Do any additional setup after loading the view.
     }
@@ -58,17 +64,26 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         let text = textView.text! as String!
         if (text.characters.count <= 120 && text.characters.count > 0) {
             // send tweet update
-            let params = ["status": text] as NSDictionary
+            var params: NSDictionary!
+            
+            if tweetReference != nil {
+                params = ["status": text, "in_reply_to_status_id": tweetReference.id_str!] as NSDictionary
+                print(tweetReference.id_str!)
+            } else {
+                params = ["status": text] as NSDictionary
+            }
             
             TwitterClient.sharedInstance.tweetWithParam(params, completion: { (tweet, error) -> () in
                 //sent successfully
                 self.tweets.insert(Tweet(dictionary: tweet), atIndex: 0)
-//                print(self.tweets)
+                print(tweet)
 //                print(self.tweets.count)
+                
+                self.firstViewController!.tweets = self.tweets
+                self.dismissViewControllerAnimated(true, completion: nil)
             })
             
-            textView.text = ""
-            textLimit.title = "\(textView.text!.characters.count)/120"
+            
             
         } else if (text.characters.count > 120) {
             let alertController = UIAlertController(title: "Error", message: "Tweet exceed allowed amount", preferredStyle: .Alert)

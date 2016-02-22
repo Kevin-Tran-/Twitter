@@ -174,6 +174,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+    @IBAction func onReply(sender: UIButton) {
+        self.performSegueWithIdentifier("tweetSegue", sender: sender)
+    }
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
         
@@ -211,11 +216,21 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         if (segue.identifier == "tweetSegue") {
+            
             let nav = segue.destinationViewController as! UINavigationController
             let composeViewController = nav.topViewController as! ComposeViewController
             composeViewController.user = User.currentUser
             composeViewController.tweets = tweets
             composeViewController.firstViewController = self
+            
+            //let cell = sender as! UIButton
+            if let cell = sender as? UIButton {
+                let buttonCell = cell.superview?.superview as! UITableViewCell
+                let indexPath = tableView.indexPathForCell((buttonCell))
+                let tweet = tweets![indexPath!.row]
+                composeViewController.tweetReference = tweet
+            }
+
         }
 
     }
