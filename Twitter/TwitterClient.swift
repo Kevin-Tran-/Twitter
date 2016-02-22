@@ -44,11 +44,11 @@ class TwitterClient: BDBOAuth1SessionManager {
             //print("home timeline: \(response)")
             var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
             completion(tweets: tweets, error: nil)
-            for tweet in tweets {
+//            for tweet in tweets {
                 //print("user: \(tweet.user!.name) username: \(tweet.user?.screenname) text: \(tweet.text), created: \(tweet.createdAt)")
 //                let temp = tweet.secondsToTime()
 //                print(temp)
-            }
+//            }
         }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
                 print("error getting home timeline")
             completion(tweets: nil, error: error)
@@ -60,14 +60,25 @@ class TwitterClient: BDBOAuth1SessionManager {
             //print("home timeline: \(response)")
             var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
             completion(tweets: tweets, error: nil)
-            for tweet in tweets {
-                print("user: \(tweet.user!.name) username: \(tweet.user?.screenname) text: \(tweet.text), created: \(tweet.createdAt)")
-                                let temp = tweet.secondsToTime()
-                                print(temp)
-            }
+//            for tweet in tweets {
+//                print("user: \(tweet.user!.name) username: \(tweet.user?.screenname) text: \(tweet.text), created: \(tweet.createdAt)")
+//                                let temp = tweet.secondsToTime()
+//                                print(temp)
+//            }
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
                 print("error getting home timeline \(error)")
                 completion(tweets: nil, error: error)
+        })
+    }
+    
+    func verifyCredentialWithParam(params: NSDictionary?, completion: (info: NSDictionary?, error: NSError?) -> ()) {
+        GET("1.1/account/verify_credentials.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("user credential: \(response)")
+            var info = response as! NSDictionary!
+            completion(info: info, error: nil)
+            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("error getting user credential \(error)")
+                completion(info: nil, error: error)
         })
     }
     

@@ -12,6 +12,8 @@ import BDBOAuth1Manager
 
 
 class ViewController: UIViewController {
+    
+    var user: User!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +31,23 @@ class ViewController: UIViewController {
             (user: User?, error: NSError?) in
             if user != nil {
                 // perform segue
+                self.user = user
                 self.performSegueWithIdentifier("loginSegue", sender: self)
+
             } else {
                 // handle login error
             }
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let nav = segue.destinationViewController as! UINavigationController
+        let tweetViewController = nav.topViewController as! TweetsViewController
+        
+        tweetViewController.user = self.user
+    }
+    
+    
 
 }
 

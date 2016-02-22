@@ -40,7 +40,7 @@ class Tweet: NSObject {
         var formatter = NSDateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
         createdAt = formatter.dateFromString(createdAtString!)
-        print(id_str)
+//        print(id_str)
 //        print(dictionary)
 //        let temp = secondsToTime(createdAt!)
 //        calcTime = temp

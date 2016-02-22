@@ -10,7 +10,6 @@ import UIKit
 
 class TweetCell: UITableViewCell {
     
-    @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screennameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
@@ -19,6 +18,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var retweetLabel: UILabel!
+    @IBOutlet weak var favoriteLabel: UILabel!
     
     
     var tweet: Tweet!{
@@ -29,12 +30,36 @@ class TweetCell: UITableViewCell {
             profileImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
             timestampLabel.text = tweet.secondsToTime() 
             self.setButtonState()
+            
+            setTweetStat()
+
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
 //         Initialization code
+    }
+    
+    func setTweetStat(){
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .DecimalStyle
+        
+        if tweet.retweetCount > 0 {
+            retweetLabel.text = "\(formatter.stringFromNumber(tweet.retweetCount!)!)"
+            retweetLabel.hidden = false
+            
+        } else {
+            retweetLabel.hidden = true
+        }
+        
+        if tweet.favoriteCount > 0 {
+            favoriteLabel.text = "\(formatter.stringFromNumber(tweet.favoriteCount!)!)"
+            favoriteLabel.hidden = false
+            
+        } else {
+            favoriteLabel.hidden = true
+        }
     }
     
     func setButtonState() {
@@ -58,18 +83,24 @@ class TweetCell: UITableViewCell {
                 TwitterClient.sharedInstance.unFavorite(tweet.id_str!)
                 favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
                 tweet.favorited = false
+                tweet.favoriteCount! -= 1
             } else {
                 TwitterClient.sharedInstance.favorite(tweet.id_str!)
                 favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
                 tweet.favorited = true
+                tweet.favoriteCount! += 1
             }
-            
+            setTweetStat()
+
         }
     }
     @IBAction func onRetweet(sender: UIButton) {
         if tweet != nil {
             TwitterClient.sharedInstance.retweet(tweet.id_str!)
             retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
+            tweet.retweetCount! += 1
+            setTweetStat()
+
         }
     }
     

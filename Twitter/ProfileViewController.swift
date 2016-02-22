@@ -11,6 +11,7 @@ import UIKit
 class ProfileViewController: UIViewController {
 
     var tweet: Tweet!
+    var user: User!
     
     @IBOutlet weak var headlineImage: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
@@ -21,42 +22,82 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followerCountLabel: UILabel!
     
+    var headlineURL: NSURL?
+    var userImageURL: NSURL?
+    var username: String?
+    var screenname: String?
+    var tagline: String?
+    var tweetcount: Int?
+    var followingCount: Int?
+    var followerCount: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if tweet.user?.profileBannerURL != nil{
-            headlineImage.setImageWithURL(NSURL(string: tweet.user!.profileBannerURL!)!)
-        } else {
-            //set image as something
+        if tweet != nil {
+            if tweet.user?.profileBannerURL != nil{
+                headlineURL = NSURL(string: tweet.user!.profileBannerURL!)!
+            } else {
+                //set image as something
+            }
+            userImageURL = NSURL(string: tweet.user!.profileImageUrl!)!
+            username = tweet.user!.name!
+            screenname = tweet.user!.screenname!
+            tagline = tweet.user!.tagline!
+            tweetcount = tweet.user!.statusesCount!
+            followingCount = tweet.user!.followingCount!
+            followerCount = tweet.user!.followerCount!
         }
-        
-        userImage.setImageWithURL(NSURL(string: tweet.user!.profileImageUrl!)!)
+        if user != nil{
+            if user.profileBannerURL != nil{
+                headlineURL = NSURL(string: user.profileBannerURL!)!
+            } else {
+                //set image as something
+            }
+            userImageURL = NSURL(string: user!.profileImageUrl!)!
+            username = user!.name!
+            screenname = user!.screenname!
+            tagline = user!.tagline!
+            tweetcount = user!.statusesCount!
+            followingCount = user!.followingCount!
+            followerCount = user!.followerCount!
+        }
+        setProfile()
+    }
+    
+    func setProfile(){
+
+        if headlineURL != nil{
+            headlineImage.setImageWithURL(headlineURL!)
+            headlineImage.hidden = false
+        } else {
+            headlineImage.hidden = true
+        }
+        userImage.setImageWithURL(userImageURL!)
         userImage.layer.cornerRadius = 10;
-        usernameLabel.text = tweet.user!.name!
-        screennameLabel.text = "@\(tweet.user!.screenname!)"
-        taglineLabel.text = tweet.user!.tagline!
+        usernameLabel.text = username!
+        screennameLabel.text = "@\(screenname!)"
+        taglineLabel.text = tagline!
         
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .DecimalStyle
-
+        
         let att = [NSFontAttributeName: UIFont.boldSystemFontOfSize(13.0)]
         var attributedString = NSMutableAttributedString(string: "\nTWEETS")
         
-        let boldStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.user!.statusesCount!)!)", attributes:att)
+        let boldStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweetcount!)!)", attributes:att)
         boldStatus.appendAttributedString(attributedString)
         tweetCountLabel.attributedText = boldStatus
         
         attributedString = NSMutableAttributedString(string: "\nFOLLOWING")
-        let followingStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.user!.followingCount!)!)", attributes:att)
+        let followingStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(followingCount!)!)", attributes:att)
         followingStatus.appendAttributedString(attributedString)
         followingCountLabel.attributedText = followingStatus
         
         attributedString = NSMutableAttributedString(string: "\nFOLLOWERS")
-        let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.user!.followerCount!)!)", attributes:att)
+        let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(followerCount!)!)", attributes:att)
         followerStatus.appendAttributedString(attributedString)
         followerCountLabel.attributedText = followerStatus
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

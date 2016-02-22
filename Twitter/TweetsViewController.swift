@@ -11,8 +11,12 @@ import UIKit
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     var tweets: [Tweet]?
+    var user: User!
     
     @IBOutlet weak var tableView: UITableView!
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
@@ -48,9 +52,16 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view.
         networkRequest()
         
+        print("Tweet View Controller loaded")        
+        
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        print("Tweet View Controller appeared")
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -150,7 +161,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     @IBAction func onProfileClick(sender: UIButton) {
-        
+    }
+    
+    
+    @IBAction func onSelfProfile(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier("selfProfileSegue", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -183,6 +198,22 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //            })
             
         }
+        if (segue.identifier == "selfProfileSegue") {
+            let nav = segue.destinationViewController as! UINavigationController
+            let profileViewController = nav.topViewController as! ProfileViewController
+            
+            profileViewController.user = User.currentUser
+            
+//            TwitterClient.sharedInstance.verifyCredentialWithParam(nil, completion: { (info, error) -> () in
+//                print(info)
+//                var user: User!
+//                
+//                profileViewController.tweet = tweet
+//                    
+//                profileViewController.tweet.user?.dictionary = info
+//            })
+        }
+
     }
 
 }

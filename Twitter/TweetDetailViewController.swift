@@ -32,8 +32,25 @@ class TweetDetailViewController: UIViewController {
         userImage.setImageWithURL(NSURL(string: (tweet.user?.profileImageUrl)!)!)
         userImage.layer.cornerRadius = 10;
         
+        setTweetCount()
+        
+        setButtonState()
+
+        // Do any additional setup after loading the view.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func onBack(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func setTweetCount(){
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "h:mm d MMM yy"
+        dateFormatter.dateFormat = "h:mm a    d MMM yy"
         let time = dateFormatter.stringFromDate(tweet.createdAt!)
         timeLabel.text = time
         
@@ -51,19 +68,51 @@ class TweetDetailViewController: UIViewController {
         let boldLikes = NSMutableAttributedString(string: "\(formatter.stringFromNumber(tweet.favoriteCount!)!)", attributes:att)
         boldLikes.appendAttributedString(attributedString)
         likeCountLabel.attributedText = boldLikes
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func onBack(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func setButtonState() {
+        if tweet != nil {
+            if (tweet.retweeted == true) {
+                retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
+            } else {
+                retweetButton.setImage(UIImage(named: "retweet-action_default"), forState: .Normal)
+            }
+            if (tweet.favorited == true) {
+                favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
+            } else {
+                favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
+            }
+        }
     }
 
+    @IBAction func onRetweet(sender: UIButton) {
+        if tweet != nil {
+            TwitterClient.sharedInstance.retweet(tweet.id_str!)
+            retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
+            tweet.retweetCount! += 1
+            setTweetCount()
+        }
+    }
+    
+    @IBAction func onFavorite(sender: UIButton) {
+        if tweet != nil {
+            if (tweet.favorited == true) {
+                TwitterClient.sharedInstance.unFavorite(tweet.id_str!)
+                favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
+                tweet.favorited = false
+                tweet.favoriteCount! -= 1
+                setTweetCount()
+            } else {
+                TwitterClient.sharedInstance.favorite(tweet.id_str!)
+                favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
+                tweet.favorited = true
+                tweet.favoriteCount! += 1
+                setTweetCount()
+            }
+            
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
