@@ -21,6 +21,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var favoriteLabel: UILabel!
     
+    weak var firstViewController: UIViewController!
     
     var tweet: Tweet!{
         didSet {
@@ -84,23 +85,26 @@ class TweetCell: UITableViewCell {
                 favoriteButton.setImage(UIImage(named: "like-action-off"), forState: .Normal)
                 tweet.favorited = false
                 tweet.favoriteCount! -= 1
+                setTweetStat()
             } else {
                 TwitterClient.sharedInstance.favorite(tweet.id_str!)
                 favoriteButton.setImage(UIImage(named: "like-action-on-red"), forState: .Normal)
                 tweet.favorited = true
                 tweet.favoriteCount! += 1
+                setTweetStat()
             }
-            setTweetStat()
-
+            
         }
     }
     @IBAction func onRetweet(sender: UIButton) {
         if tweet != nil {
-            TwitterClient.sharedInstance.retweet(tweet.id_str!)
-            retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
-            tweet.retweetCount! += 1
-            setTweetStat()
-
+            if (tweet.retweeted == false) {
+                TwitterClient.sharedInstance.retweet(tweet.id_str!)
+                retweetButton.setImage(UIImage(named: "retweet-action-on-green"), forState: .Normal)
+                tweet.retweetCount! += 1
+                tweet.retweeted = true
+                setTweetStat()
+            }
         }
     }
     

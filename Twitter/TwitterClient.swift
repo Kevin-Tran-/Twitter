@@ -117,6 +117,17 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    func retweetWithParam(params: NSDictionary?, completion: (tweet: NSDictionary!, error: NSError?) -> ()) {
+        POST("1.1/statuses/retweet/:id.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Successfully retweet")
+            //self.loginCompletion?(stwe: tweets, error: nil)
+            
+            }) { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("Failed to retweet \(error)")
+                self.loginCompletion?(user: nil, error: error)
+        }
+    }
+    
 //    func unRetweet (tweet: Tweet) -> (){
 //        var originalTweetId = ""
 //        if tweet.retweeted == false {
