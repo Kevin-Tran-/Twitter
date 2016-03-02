@@ -4,7 +4,7 @@
 //
 //  Created by Kevin Tran on 2/13/16.
 //  Copyright © 2016 Kevin Tran. All rights reserved.
-//
+//  Handles Rest API
 
 import UIKit
 import BDBOAuth1Manager
@@ -23,7 +23,8 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
         return Static.instance
     }
-    
+
+    // Login
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
         loginCompletion = completion
         
@@ -39,6 +40,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    // Load current user home timeline
     func homeTimelineWithCompletion(count: Int, params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
         GET("1.1/statuses/home_timeline.json?count=\(count)", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             //print("home timeline: \(response)")
@@ -55,6 +57,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    // Load a user tweet timeline
     func UserTimelineWithCompletion(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
         GET("1.1/statuses/user_timeline.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             //print("home timeline: \(response)")
@@ -71,6 +74,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    // Tweet with param
     func tweetWithParam(params: NSDictionary?, completion: (tweet: NSDictionary!, error: NSError?) -> ()) {
         POST("1.1/statuses/update.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print("User just tweeted successfully")
@@ -82,6 +86,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    // Get access
     func openURL (url: NSURL){
         fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: BDBOAuth1Credential (queryString: url.query), success: { (accessToken: BDBOAuth1Credential!) -> Void in
             print("Got the access token")
@@ -105,6 +110,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    // Retweet Api
     func retweet (id_str: String) -> (){
         print(id_str)
         POST("1.1/statuses/retweet/\(id_str).json", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
@@ -117,6 +123,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    // Retweet with Params
     func retweetWithParam(params: NSDictionary?, completion: (tweet: NSDictionary!, error: NSError?) -> ()) {
         POST("1.1/statuses/retweet/:id.json", parameters: params, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print("Successfully retweet")
@@ -149,6 +156,7 @@ class TwitterClient: BDBOAuth1SessionManager {
 //        }
 //    }
     
+    // Favorite Api
     func favorite (id_str: String) -> (){
         print(id_str)
         POST("1.1/favorites/create.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in
@@ -161,6 +169,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    // Unfavorite Api
     func unFavorite (id_str: String) -> (){
         print(id_str)
         POST("1.1/favorites/destroy.json?id=\(id_str)", parameters: nil, success: { (operation: NSURLSessionDataTask, response: AnyObject?) -> Void in

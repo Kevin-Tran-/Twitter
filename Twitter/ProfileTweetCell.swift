@@ -22,6 +22,7 @@ class ProfileTweetCell: UITableViewCell {
 
     weak var firstViewController: UIViewController!
     
+    // Set view
     var tweet: Tweet!{
         didSet {
             nameLabel.text = tweet.user?.name
@@ -37,9 +38,9 @@ class ProfileTweetCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //         Initialization code
     }
     
+    // Load state to be used if local variable changes
     func setTweetStat(){
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .DecimalStyle
@@ -47,7 +48,6 @@ class ProfileTweetCell: UITableViewCell {
         if tweet.retweetCount > 0 {
             retweetLabel.text = "\(formatter.stringFromNumber(tweet.retweetCount!)!)"
             retweetLabel.hidden = false
-            
         } else {
             retweetLabel.hidden = true
         }
@@ -55,12 +55,12 @@ class ProfileTweetCell: UITableViewCell {
         if tweet.favoriteCount > 0 {
             favoriteLabel.text = "\(formatter.stringFromNumber(tweet.favoriteCount!)!)"
             favoriteLabel.hidden = false
-            
         } else {
             favoriteLabel.hidden = true
         }
     }
     
+    // Set button state
     func setButtonState() {
         if tweet != nil {
             if (tweet.retweeted == true) {
@@ -76,6 +76,7 @@ class ProfileTweetCell: UITableViewCell {
         }
     }
     
+    // Set Favorite Api and change local variables
     @IBAction func onFavorite(sender: UIButton) {
         if tweet != nil {
             if (tweet.favorited == true) {
@@ -94,6 +95,8 @@ class ProfileTweetCell: UITableViewCell {
             
         }
     }
+    
+    // Set Retweet Api and change local variables
     @IBAction func onRetweet(sender: UIButton) {
         if tweet != nil {
             if (tweet.retweeted == false) {
@@ -105,6 +108,4 @@ class ProfileTweetCell: UITableViewCell {
             }
         }
     }
-    
-
 }

@@ -16,15 +16,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-
     
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
     var count = 40
-    
     var refreshControl: UIRefreshControl!       //add refresh on drag
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +51,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         print("Tweet View Controller loaded")        
         
+        // Add refresh controller
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
@@ -61,6 +59,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidAppear(animated: Bool) {
         print("Tweet View Controller appeared")
+        
+        // Reload table to run for local variable change
         self.tableView.reloadData()
     }
 
@@ -69,6 +69,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    // Retrieve user home timeline Twitter Tweets
     func networkRequest(){
         TwitterClient.sharedInstance.homeTimelineWithCompletion(20, params: nil) { (tweets, error) -> () in
             self.tweets = tweets
@@ -76,10 +77,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    // This method causes program to not load properly due to rate limit
+    //
     func loadMoreData() {
         print(count)
-        if count < 200 {
+        if count < 200 {    //Twitter max is 200
             TwitterClient.sharedInstance.homeTimelineWithCompletion(count, params: nil) { (tweets, error) -> () in
                 self.tweets = tweets
                 
@@ -93,7 +94,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 // Reload the tableView now that there is new data
                 self.tableView.reloadData()
                 self.count += 20
-
             }
         }
     }
@@ -119,6 +119,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    // Color RGB conversion to UIColor
     func UIColorFromRGB(rgbValue: UInt) -> UIColor {
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
@@ -136,6 +137,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    // Load Tweet using reuse table cell
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
@@ -145,6 +147,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
+    // Pull to refresh
     func onRefresh() {
         self.networkRequest()
         print("Refreshing Tweets")
@@ -152,10 +155,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print("Refreshing Complete")
     }
 
+    // Logout action
     @IBAction func onLogout(sender: UIButton) {
         User.currentUser?.logout()
     }
     
+    // Tweeter Profile Click button
     @IBAction func onTap(sender: UITapGestureRecognizer) {
         self.performSegueWithIdentifier("tweetDetailSegue", sender: self)
 
@@ -163,23 +168,24 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func onProfileClick(sender: UIButton) {
     }
     
-    
+    //
     @IBAction func onSelfProfile(sender: UIBarButtonItem) {
         self.performSegueWithIdentifier("selfProfileSegue", sender: self)
     }
     
+    // Self Profile click
     @IBAction func onTweetClick(sender: UIBarButtonItem) {
         self.performSegueWithIdentifier("tweetSegue", sender: self)
     }
     
-    
+    // Reply Action
     @IBAction func onReply(sender: UIButton) {
         self.performSegueWithIdentifier("tweetSegue", sender: sender)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
         
+        // Tweet segue should pass tweet from the current cell and pass back the tweet when local variable changed
         if (segue.identifier == "tweetDetailSegue") {
             let cell = sender as! UITableViewCell
             let indexPath = tableView.indexPathForCell((cell))
@@ -192,6 +198,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             detailViewController.firstViewController = self
             print("prepare for seque called on Tweet Details")
         }
+        
+        // Load the Tweeter profile
         if (segue.identifier == "profileSegue") {
             let cell = sender as! UIButton
             let buttonCell = cell.superview?.superview as! UITableViewCell
@@ -203,12 +211,15 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             profileViewController.user = tweet.user
         }
+        
+        // Load self profile
         if (segue.identifier == "selfProfileSegue") {
             let nav = segue.destinationViewController as! UINavigationController
             let profileViewController = nav.topViewController as! ProfileViewController
             profileViewController.user = User.currentUser
         }
         
+        // Load message composure
         if (segue.identifier == "tweetSegue") {
             
             let nav = segue.destinationViewController as! UINavigationController

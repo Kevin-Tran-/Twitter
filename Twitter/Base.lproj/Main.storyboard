@@ -529,7 +529,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aGd-d6-1bE">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aGd-d6-1bE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -765,6 +765,12 @@
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aGd-d6-1bE" firstAttribute="leading" secondItem="0UR-g2-RIm" secondAttribute="leading" id="UiT-GL-lBU"/>
+                            <constraint firstItem="Xso-zo-wva" firstAttribute="top" secondItem="aGd-d6-1bE" secondAttribute="bottom" id="eHL-8X-USk"/>
+                            <constraint firstItem="aGd-d6-1bE" firstAttribute="top" secondItem="0UR-g2-RIm" secondAttribute="top" id="nAK-vR-XDR"/>
+                            <constraint firstAttribute="trailing" secondItem="aGd-d6-1bE" secondAttribute="trailing" id="xEh-wB-nNW"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4Lx-3z-kjE">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="0ZM-sF-kn6">
@@ -946,7 +952,7 @@
         <image name="retweet-action_default" width="75" height="72"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="08M-5b-tnG"/>
         <segue reference="nJM-CG-icl"/>
+        <segue reference="zKN-ov-bZN"/>
     </inferredMetricsTieBreakers>
 </document>

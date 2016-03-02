@@ -38,6 +38,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        // Retrieve user info for view
         if user != nil{
             if user.profileBannerURL != nil{
                 headlineURL = NSURL(string: user.profileBannerURL!)!
@@ -66,8 +67,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             = followerCountLabel.frame.origin.y + 80
         var params: NSDictionary!
 
+        // Retrieve user timeline
         params = ["user_id": user.id!] as NSDictionary
-        
         TwitterClient.sharedInstance.UserTimelineWithCompletion(params) { (tweets, error) -> () in
             if error == nil {
                 self.tweets = tweets
@@ -76,8 +77,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    // Set mutable strings and view content
     func setProfile(){
-
         if headlineURL != nil{
             headlineImage.setImageWithURL(headlineURL!)
             headlineImage.hidden = false
@@ -110,9 +111,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(followerCount!)!)", attributes:att)
         followerStatus.appendAttributedString(attributedString)
         followerCountLabel.attributedText = followerStatus
-
     }
     
+    // Set table cell
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tweets != nil {
             return tweets!.count
@@ -121,6 +122,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    // Load Tweet using reuse table cell
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ProfileTweetCell", forIndexPath: indexPath) as! ProfileTweetCell
@@ -135,7 +137,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Dispose of any resources that can be recreated.
     }
     
+    // Back action, dismiss view
     @IBAction func onBack(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
 }

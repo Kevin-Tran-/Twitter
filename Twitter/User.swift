@@ -13,7 +13,7 @@ let currentUserKey = "kCurrentUserKey"
 let userDidLoginNotification = "userDidLoginNotification"
 let userDidLogoutNotification = "userDidLogoutNotification"
 
-
+// Handles User Api data to be used locally
 class User: NSObject {
     var name: String?
     var screenname: String?
@@ -40,9 +40,9 @@ class User: NSObject {
         favouritesCount = dictionary["favourites_count"] as? Int
         followingCount = dictionary["friends_count"] as? Int
         id = dictionary["id"] as? Int
-        
     }
     
+    // Logout action
     func logout() {
         User.currentUser = nil
         TwitterClient.sharedInstance.requestSerializer.removeAccessToken()
@@ -50,9 +50,8 @@ class User: NSObject {
         NSNotificationCenter.defaultCenter().postNotificationName(userDidLogoutNotification, object: nil)
     }
     
-    
+    // Retrieve current user
     class var currentUser: User? {
-        
         get {
         if _currentUser == nil {
         //logged out or just boot up

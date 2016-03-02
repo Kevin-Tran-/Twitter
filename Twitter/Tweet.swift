@@ -25,6 +25,7 @@ class Tweet: NSObject {
     let mins = 60
     let hours = 24
     
+    // Store relevant Tweet Api to local
     init(dictionary: NSDictionary) {
         user = User(dictionary: dictionary["user"] as! NSDictionary)
         text = dictionary["text"] as? String
@@ -35,7 +36,6 @@ class Tweet: NSObject {
         reply_id = dictionary["reply_id"] as? String
         favoriteCount = dictionary["favorite_count"] as? Int
         retweetCount = dictionary["retweet_count"] as? Int
-        
         
         var formatter = NSDateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
@@ -48,6 +48,7 @@ class Tweet: NSObject {
         
     }
     
+    // Convert to shorthand
     func secondsToTime() -> String {
         let today = NSDate()
         var sec = Int(today.timeIntervalSinceDate(createdAt!))
@@ -74,6 +75,7 @@ class Tweet: NSObject {
         return s
     }
     
+    // Store all tweets in an array
     class func tweetsWithArray(array: [NSDictionary]) -> [Tweet] {
         var tweets = [Tweet]()
         
@@ -84,6 +86,7 @@ class Tweet: NSObject {
         return tweets
     }
     
+    // Add tweet to the beginning
     class func tweetsAddBeginning(tweet: NSDictionary, var tweets: [Tweet]!) -> [Tweet] {
         
         tweets.insert(Tweet(dictionary: tweet), atIndex: 0)

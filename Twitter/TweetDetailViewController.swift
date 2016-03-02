@@ -22,7 +22,6 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var likeCountLabel: UILabel!
     
     weak var firstViewController: TweetsViewController?
-
     
     var tweet: Tweet!
     var tweets: [Tweet]!
@@ -37,10 +36,7 @@ class TweetDetailViewController: UIViewController {
         userImage.layer.cornerRadius = 10;
         
         setTweetCount()
-        
         setButtonState()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,10 +44,12 @@ class TweetDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // Back action, dismiss view
     @IBAction func onBack(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // Set mutable string
     func setTweetCount(){
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "h:mm a    d MMM yy"
@@ -74,6 +72,7 @@ class TweetDetailViewController: UIViewController {
         likeCountLabel.attributedText = boldLikes
     }
     
+    // Set button state for current and local variable change
     func setButtonState() {
         if tweet != nil {
             if (tweet.retweeted == true) {
@@ -89,6 +88,7 @@ class TweetDetailViewController: UIViewController {
         }
     }
 
+    // Retweet Api action
     @IBAction func onRetweet(sender: UIButton) {
         if tweet != nil {
             TwitterClient.sharedInstance.retweet(tweet.id_str!)
@@ -98,6 +98,7 @@ class TweetDetailViewController: UIViewController {
         }
     }
     
+    // Favorite Api action
     @IBAction func onFavorite(sender: UIButton) {
         if tweet != nil {
             if (tweet.favorited == true) {
@@ -117,13 +118,12 @@ class TweetDetailViewController: UIViewController {
         }
     }
     
+    // Segue to message composure
     @IBAction func onReply(sender: UIButton) {
         self.performSegueWithIdentifier("detailsTweetSegue", sender: sender)
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Pass current tweet info
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "detailsTweetSegue") {
             
@@ -133,8 +133,6 @@ class TweetDetailViewController: UIViewController {
             composeViewController.tweetReference = tweet
             composeViewController.tweets = tweets
             composeViewController.firstViewController = self.firstViewController
-
-
         }
     }
     
