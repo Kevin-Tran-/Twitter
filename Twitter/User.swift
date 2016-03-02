@@ -25,6 +25,7 @@ class User: NSObject {
     var profileBannerURL: String?
     var favouritesCount: Int?
     var followingCount: Int?
+    var id: Int?
     
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
@@ -38,6 +39,7 @@ class User: NSObject {
         profileBannerURL = dictionary["profile_banner_url"] as? String
         favouritesCount = dictionary["favourites_count"] as? Int
         followingCount = dictionary["friends_count"] as? Int
+        id = dictionary["id"] as? Int
         
     }
     

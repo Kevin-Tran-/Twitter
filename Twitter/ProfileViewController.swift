@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var tweet: Tweet!
+    var tweets: [Tweet]!
     var user: User!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
@@ -33,6 +33,7 @@ class ProfileViewController: UIViewController {
     var followingCount: Int?
     var followerCount: Int?
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,27 @@ class ProfileViewController: UIViewController {
             followerCount = user!.followerCount!
         }
         setProfile()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        headerView.frame.size.height
+            = followerCountLabel.frame.origin.y + 80
+        var params: NSDictionary!
+
+        params = ["user_id": user.id!] as NSDictionary
+        
+        TwitterClient.sharedInstance.UserTimelineWithCompletion(params) { (tweets, error) -> () in
+            if error == nil {
+                self.tweets = tweets
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func setProfile(){
@@ -88,6 +110,24 @@ class ProfileViewController: UIViewController {
         let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(followerCount!)!)", attributes:att)
         followerStatus.appendAttributedString(attributedString)
         followerCountLabel.attributedText = followerStatus
+
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tweets != nil {
+            return tweets!.count
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("ProfileTweetCell", forIndexPath: indexPath) as! ProfileTweetCell
+        cell.tweet = tweets![indexPath.row]
+        print(indexPath.row)
+        
+        return cell
     }
 
     override func didReceiveMemoryWarning() {
