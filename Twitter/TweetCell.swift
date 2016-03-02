@@ -33,7 +33,6 @@ class TweetCell: UITableViewCell {
             self.setButtonState()
             
             setTweetStat()
-
         }
     }
 

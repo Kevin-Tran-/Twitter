@@ -32,24 +32,11 @@ class ProfileViewController: UIViewController {
     var tweetcount: Int?
     var followingCount: Int?
     var followerCount: Int?
+    @IBOutlet weak var headerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if tweet != nil {
-//            if tweet.user?.profileBannerURL != nil{
-//                headlineURL = NSURL(string: tweet.user!.profileBannerURL!)!
-//            } else {
-//                //set image as something
-//            }
-//            userImageURL = NSURL(string: tweet.user!.profileImageUrl!)!
-//            username = tweet.user!.name!
-//            screenname = tweet.user!.screenname!
-//            tagline = tweet.user!.tagline!
-//            tweetcount = tweet.user!.statusesCount!
-//            followingCount = tweet.user!.followingCount!
-//            followerCount = tweet.user!.followerCount!
-//        }
+    
         if user != nil{
             if user.profileBannerURL != nil{
                 headlineURL = NSURL(string: user.profileBannerURL!)!
@@ -65,7 +52,6 @@ class ProfileViewController: UIViewController {
             followerCount = user!.followerCount!
         }
         setProfile()
-
     }
     
     func setProfile(){
@@ -74,7 +60,8 @@ class ProfileViewController: UIViewController {
             headlineImage.setImageWithURL(headlineURL!)
             headlineImage.hidden = false
         } else {
-            headlineImage.hidden = true
+            headlineImage.backgroundColor = UIColor.blueColor()
+            //headlineImage.hidden = true
         }
         userImage.setImageWithURL(userImageURL!)
         userImage.layer.cornerRadius = 10;
@@ -101,8 +88,6 @@ class ProfileViewController: UIViewController {
         let followerStatus = NSMutableAttributedString(string: "\(formatter.stringFromNumber(followerCount!)!)", attributes:att)
         followerStatus.appendAttributedString(attributedString)
         followerCountLabel.attributedText = followerStatus
-        
-        //scrollView.contentSize = self.contentView.bounds.size//CGSize(width: scrollView.frame.size.width, height: contentView.frame.origin.y + contentView.frame.size.height)
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,15 +98,4 @@ class ProfileViewController: UIViewController {
     @IBAction func onBack(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
